@@ -3,63 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
     <title>Calculadora</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            flex-direction: column;
-        }
-        .calculator {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .display {
-            width: 100%;
-            height: 50px;
-            text-align: right;
-            margin-bottom: 10px;
-            padding: 10px;
-            font-size: 24px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .button {
-            padding: 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .button:active {
-            background-color: #e0e0e0;
-        }
-        .button.operator {
-            background-color: #ff9500;
-            color: #fff;
-        }
-        .button.operator:active {
-            background-color: #e08b00;
-        }
-        .grande {
-            font-size: 20px;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
     <div class="calculator">
@@ -78,9 +24,10 @@
             <button class="button" onclick="appendNumber('3')">3</button>
             <button class="button operator" onclick="chooseOperation('-')">-</button>
             <button class="button" onclick="appendNumber('0')">0</button>
+            <button class="button" onclick="appendComma()">,</button>
             <button class="button" onclick="clearDisplay()">C</button>
-            <button class="button" onclick="calculate()">=</button>
             <button class="button operator" onclick="chooseOperation('+')">+</button>
+            <button class="button" onclick="calculate()">=</button>
             <button class="button" onclick="calculateSquare()">x²</button>
             <button class="button" id="modulo" onclick="mod()">|X|</button>
             <button class="button" id="factorial" onclick="fact()">X!</button>
@@ -91,140 +38,5 @@
         </div>
     </div>
     <h2 id="info" class="grande" title="Info sobre el número">Info sobre el número</h2>
-
-    <script>
-        let currentNumber = '';
-        let previousNumber = '';
-        let operation = null;
-
-        function appendNumber(number) {
-            currentNumber += number;
-            updateDisplay();
-        }
-
-        function chooseOperation(op) {
-            if (currentNumber === '') return;
-            if (previousNumber !== '') {
-                calculate();
-            }
-            operation = op;
-            previousNumber = currentNumber;
-            currentNumber = '';
-        }
-
-        function calculate() {
-            let result;
-            const prev = parseFloat(previousNumber);
-            const current = parseFloat(currentNumber);
-            if (isNaN(prev) || isNaN(current)) return;
-            switch (operation) {
-                case '+':
-                    result = prev + current;
-                    break;
-                case '-':
-                    result = prev - current;
-                    break;
-                case '*':
-                    result = prev * current;
-                    break;
-                case '/':
-                    result = prev / current;
-                    break;
-                default:
-                    return;
-            }
-            currentNumber = result;
-            operation = null;
-            previousNumber = '';
-            updateDisplay();
-            rellenar_info(result);
-        }
-
-        function clearDisplay() {
-            currentNumber = '';
-            previousNumber = '';
-            operation = null;
-            updateDisplay();
-        }
-
-        function updateDisplay() {
-            document.getElementById('display').value = currentNumber;
-        }
-
-        function calculateSquare() {
-            if (currentNumber === '') return;
-            const number = parseFloat(currentNumber);
-            const result = number * number;
-            currentNumber = result;
-            updateDisplay();
-            rellenar_info(result);
-        }
-
-        function mod() {
-            if (currentNumber === '') return;
-            const number = parseFloat(currentNumber);
-            const result = Math.abs(number);
-            currentNumber = result;
-            updateDisplay();
-            rellenar_info(result);
-        }
-
-        function fact() {
-            if (currentNumber === '') return;
-            let number = parseInt(currentNumber);
-            if (number < 0) return;
-            let result = 1;
-            for (let i = 1; i <= number; i++) {
-                result *= i;
-            }
-            currentNumber = result;
-            updateDisplay();
-            rellenar_info(result);
-        }
-
-        function rellenar_info(result) {
-            const infoElement = document.getElementById('info');
-            if (result < 100) {
-                infoElement.textContent = "Info: El resultado es menor que 100";
-            } else if (result >= 100 && result <= 200) {
-                infoElement.textContent = "Info: El resultado está entre 100 y 200";
-            } else {
-                infoElement.textContent = "Info: El resultado es superior a 200";
-            }
-        }
-
-        function sumatorio() {
-            if (currentNumber === '') return;
-            const numbers = currentNumber.split(',').map(Number);
-            const result = numbers.reduce((acc, num) => acc + num, 0);
-            currentNumber = result;
-            updateDisplay();
-            rellenar_info(result);
-        }
-
-        function ordenar() {
-            if (currentNumber === '') return;
-            const numbers = currentNumber.split(',').map(Number);
-            numbers.sort((a, b) => a - b);
-            currentNumber = numbers.join(',');
-            updateDisplay();
-        }
-
-        function revertir() {
-            if (currentNumber === '') return;
-            const numbers = currentNumber.split(',');
-            numbers.reverse();
-            currentNumber = numbers.join(',');
-            updateDisplay();
-        }
-
-        function quitar() {
-            if (currentNumber === '') return;
-            const numbers = currentNumber.split(',');
-            numbers.pop();
-            currentNumber = numbers.join(',');
-            updateDisplay();
-        }
-    </script>
 </body>
 </html>

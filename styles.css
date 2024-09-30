@@ -1,114 +1,54 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    background-color: #f0f0f0;
+    flex-direction: column;
 }
-
 .calculator {
-    background-color: #fff;
+    border: 1px solid #ccc;
     padding: 20px;
     border-radius: 10px;
+    background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
-
 .display {
-    background-color: #222;
-    color: #fff;
-    font-size: 2em;
-    text-align: right;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
     width: 100%;
-    box-sizing: border-box;
+    height: 50px;
+    text-align: right;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 24px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
-
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
-
 .button {
-    width: 60px;
-    height: 60px;
-    margin: 5px;
-    font-size: 1.5em;
+    padding: 20px;
+    font-size: 18px;
     border: none;
     border-radius: 5px;
+    background-color: #f9f9f9;
     cursor: pointer;
-    transition: background-color 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-.button:hover {
-    background-color: #ddd;
-}
-
 .button:active {
-    background-color: #ccc;
-}
-
-.button.operator {
-    background-color: #f9a825;
-    color: #fff;
-}
-
-.button.operator:hover {
-    background-color: #f57f17;
-}
-
-.button.operator:active {
-    background-color: #ef6c00;
-}
-
-.button.equal {
-    background-color: #4caf50;
-    color: #fff;
-    grid-column: span 2;
-}
-
-.button.equal:hover {
-    background-color: #43a047;
-}
-
-.button.equal:active {
-    background-color: #388e3c;
-}
-
-.button.clear {
-    background-color: #e53935;
-    color: #fff;
-    grid-column: span 2;
-}
-
-.button.clear:hover {
-    background-color: #d32f2f;
-}
-
-.button.clear:active {
-    background-color: #c62828;
-}
-
-.button.number {
     background-color: #e0e0e0;
-    color: #000;
 }
-
-.button.number:hover {
-    background-color: #d5d5d5;
+.button.operator {
+    background-color: #ff9500;
+    color: #fff;
 }
-
-.button.number:active {
-    background-color: #c2c2c2;
+.button.operator:active {
+    background-color: #e08b00;
+}
+.grande {
+    font-size: 20px;
+    margin-top: 20px;
 }

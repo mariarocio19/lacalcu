@@ -1,96 +1,167 @@
-// script.js
+let currentNumber = '';
+let previousNumber = '';
+let operation = null;
 
-// Function to add two numbers
-function add(a, b) {
-    return a + b;
-}
+document.addEventListener('keydown', handleKeyPress);
 
-// Function to subtract two numbers
-function subtract(a, b) {
-    return a - b;
-}
-
-// Function to multiply two numbers
-function multiply(a, b) {
-    return a * b;
-}
-
-// Function to divide two numbers
-function divide(a, b) {
-    if (b === 0) {
-        return 'Error: Division by zero';
+function handleKeyPress(event) {
+    const key = event.key;
+    if (isNumber(key) || key === ',') {
+        appendNumber(key);
+    } else if (isOperation(key)) {
+        chooseOperation(key);
+    } else if (key === 'Enter') {
+        calculate();
+    } else if (key === 'Backspace') {
+        deleteLastDigit();
     }
-    return a / b;
 }
 
-// Function to find the modulus of two numbers
-function modulus(a, b) {
-    return a % b;
+function isNumber(key) {
+    return /\d/.test(key);
 }
 
-// Function to exponentiate two numbers
-function exponentiate(a, b) {
-    return a ** b;
+function isOperation(key) {
+    return ['+', '-', '*', '/'].includes(key);
 }
 
-// Function to find the square root of a number
-function squareRoot(a) {
-    if (a < 0) {
-        return 'Error: Negative number';
+function appendNumber(number) {
+    currentNumber += number;
+    updateDisplay();
+}
+
+function appendComma() {
+    if (!currentNumber.includes(',')) {
+        currentNumber += ',';
+        updateDisplay();
     }
-    return Math.sqrt(a);
 }
 
-// Function to find the logarithm of a number
-function logarithm(a) {
-    if (a <= 0) {
-        return 'Error: Non-positive number';
+function chooseOperation(op) {
+    if (currentNumber === '') return;
+    if (previousNumber !== '') {
+        calculate();
     }
-    return Math.log(a);
+    operation = op;
+    previousNumber = currentNumber;
+    currentNumber = '';
 }
 
-// Function to handle the calculation based on user input
 function calculate() {
-    const num1 = parseFloat(document.getElementById('num1').value);
-    const num2 = parseFloat(document.getElementById('num2').value);
-    const operator = document.getElementById('operator').value;
     let result;
-
-    if (isNaN(num1) || (operator !== 'sqrt' && operator !== 'log' && isNaN(num2))) {
-        result = 'Error: Invalid input';
-    } else {
-        switch (operator) {
-            case '+':
-                result = add(num1, num2);
-                break;
-            case '-':
-                result = subtract(num1, num2);
-                break;
-            case '*':
-                result = multiply(num1, num2);
-                break;
-            case '/':
-                result = divide(num1, num2);
-                break;
-            case '%':
-                result = modulus(num1, num2);
-                break;
-            case '**':
-                result = exponentiate(num1, num2);
-                break;
-            case 'sqrt':
-                result = squareRoot(num1);
-                break;
-            case 'log':
-                result = logarithm(num1);
-                break;
-            default:
-                result = 'Invalid operator';
-        }
+    const prev = parseFloat(previousNumber.replace(',', '.'));
+    const current = parseFloat(currentNumber.replace(',', '.'));
+    if (isNaN(prev) || isNaN(current)) return;
+    switch (operation) {
+        case '+':
+            result = prev + current;
+            break;
+        case '-':
+            result = prev - current;
+            break;
+        case '*':
+            result = prev * current;
+            break;
+        case '/':
+            result = prev / current;
+            break;
+        default:
+            return;
     }
-
-    document.getElementById('result').innerText = `Result: ${result}`;
+    currentNumber = result.toString().replace('.', ',');
+    operation = null;
+    previousNumber = '';
+    updateDisplay();
+    rellenar_info(result);
 }
 
-// Add event listener to the calculate button
-document.getElementById('calculateBtn').addEventListener('click', calculate);
+function clearDisplay() {
+    currentNumber = '';
+    previousNumber = '';
+    operation = null;
+    updateDisplay();
+}
+
+function updateDisplay() {
+    document.getElementById('display').value = currentNumber;
+}
+
+function calculateSquare() {
+    if (currentNumber === '') return;
+    const number = parseFloat(currentNumber.replace(',', '.'));
+    const result = number * number;
+    currentNumber = result.toString().replace('.', ',');
+    updateDisplay();
+    rellenar_info(result);
+}
+
+function mod() {
+    if (currentNumber === '') return;
+    const number = parseFloat(currentNumber.replace(',', '.'));
+    const result = Math.abs(number);
+    currentNumber = result.toString().replace('.', ',');
+    updateDisplay();
+    rellenar_info(result);
+}
+
+function fact() {
+    if (currentNumber === '') return;
+    let number = parseInt(currentNumber);
+    if (number < 0) return;
+    let result = 1;
+    for (let i = 1; i <= number; i++) {
+        result *= i;
+    }
+    currentNumber = result.toString();
+    updateDisplay();
+    rellenar_info(result);
+}
+
+function rellenar_info(result) {
+    const infoElement = document.getElementById('info');
+    if (result < 100) {
+        infoElement.textContent = "Info: El resultado es menor que 100";
+    } else if (result >= 100 && result <= 200) {
+        infoElement.textContent = "Info: El resultado está entre 100 y 200";
+    } else {
+        infoElement.textContent = "Info: El resultado es superior a 200";
+    }
+}
+
+function sumatorio() {
+    if (currentNumber === '') return;
+    const numbers = currentNumber.split(',').map(Number);
+    const result = numbers.reduce((acc, num) => acc + num, 0);
+    currentNumber = result.toString().replace('.', ',');
+    updateDisplay();
+    rellenar_info(result);
+}
+
+function ordenar() {
+    if (currentNumber === '') return;
+    const numbers = currentNumber.split(',').map(Number);
+    numbers.sort((a, b) => a - b);
+    currentNumber = numbers.join(',');
+    updateDisplay();
+}
+
+function revertir() {
+    if (currentNumber === '') return;
+    const numbers = currentNumber.split(',');
+    numbers.reverse();
+    currentNumber = numbers.join(',');
+    updateDisplay();
+}
+
+function quitar() {
+    if (currentNumber === '') return;
+    const numbers = currentNumber.split(',');
+    numbers.pop();
+    currentNumber = numbers.join(',');
+    updateDisplay();
+}
+
+function deleteLastDigit() {
+    currentNumber = currentNumber.slice(0, -1);
+    updateDisplay();
+}
