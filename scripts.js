@@ -180,3 +180,36 @@ function elevarAlCuadrado() {
     updateDisplay();
     rellenar_info(result);
 }
+
+function sumatorio() {
+    if (currentNumber === '') return;
+    const numbers = currentNumber.split(',').map(Number);
+    const result = numbers.reduce((acc, num) => acc + num, 0);
+    currentNumber = result.toString().replace('.', ',');
+    updateDisplay();
+    rellenar_info(result);
+}
+
+function ordenar() {
+    if (currentNumber === '') return;
+    const numbers = currentNumber.split(',').map(Number);
+    numbers.sort((a, b) => a - b);
+    currentNumber = numbers.join(',');
+    updateDisplay();
+}
+
+function revertir() {
+    if (currentNumber === '') return;
+    const numbers = currentNumber.split(',');
+    numbers.reverse();
+    currentNumber = numbers.join(',');
+    updateDisplay();
+}
+
+function quitar() {
+    if (currentNumber === '') return;
+    const numbers = currentNumber.split(',');
+    numbers.pop();
+    currentNumber = numbers.join(',');
+    updateDisplay();
+}
