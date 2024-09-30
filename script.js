@@ -23,6 +23,16 @@ function divide(a, b) {
     return a / b;
 }
 
+// Function to find the modulus of two numbers
+function modulus(a, b) {
+    return a % b;
+}
+
+// Function to exponentiate two numbers
+function exponentiate(a, b) {
+    return a ** b;
+}
+
 // Function to handle the calculation based on user input
 function calculate() {
     const num1 = parseFloat(document.getElementById('num1').value);
@@ -30,21 +40,31 @@ function calculate() {
     const operator = document.getElementById('operator').value;
     let result;
 
-    switch (operator) {
-        case '+':
-            result = add(num1, num2);
-            break;
-        case '-':
-            result = subtract(num1, num2);
-            break;
-        case '*':
-            result = multiply(num1, num2);
-            break;
-        case '/':
-            result = divide(num1, num2);
-            break;
-        default:
-            result = 'Invalid operator';
+    if (isNaN(num1) || isNaN(num2)) {
+        result = 'Error: Invalid input';
+    } else {
+        switch (operator) {
+            case '+':
+                result = add(num1, num2);
+                break;
+            case '-':
+                result = subtract(num1, num2);
+                break;
+            case '*':
+                result = multiply(num1, num2);
+                break;
+            case '/':
+                result = divide(num1, num2);
+                break;
+            case '%':
+                result = modulus(num1, num2);
+                break;
+            case '**':
+                result = exponentiate(num1, num2);
+                break;
+            default:
+                result = 'Invalid operator';
+        }
     }
 
     document.getElementById('result').innerText = `Result: ${result}`;

@@ -12,6 +12,7 @@
             align-items: center;
             height: 100vh;
             background-color: #f0f0f0;
+            flex-direction: column;
         }
         .calculator {
             border: 1px solid #ccc;
@@ -54,6 +55,10 @@
         .button.operator:active {
             background-color: #e08b00;
         }
+        .grande {
+            font-size: 20px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -76,8 +81,10 @@
             <button class="button" onclick="clearDisplay()">C</button>
             <button class="button" onclick="calculate()">=</button>
             <button class="button operator" onclick="chooseOperation('+')">+</button>
+            <button class="button" onclick="calculateSquare()">x²</button>
         </div>
     </div>
+    <h2 id="info" class="grande" title="Info sobre el número">Info sobre el número</h2>
 
     <script>
         let currentNumber = '';
@@ -124,6 +131,7 @@
             operation = null;
             previousNumber = '';
             updateDisplay();
+            rellenar_info(result);
         }
 
         function clearDisplay() {
@@ -135,6 +143,26 @@
 
         function updateDisplay() {
             document.getElementById('display').value = currentNumber;
+        }
+
+        function calculateSquare() {
+            if (currentNumber === '') return;
+            const number = parseFloat(currentNumber);
+            const result = number * number;
+            currentNumber = result;
+            updateDisplay();
+            rellenar_info(result);
+        }
+
+        function rellenar_info(result) {
+            const infoElement = document.getElementById('info');
+            if (result < 100) {
+                infoElement.textContent = "Info: El resultado es menor que 100";
+            } else if (result >= 100 && result <= 200) {
+                infoElement.textContent = "Info: El resultado está entre 100 y 200";
+            } else {
+                infoElement.textContent = "Info: El resultado es superior a 200";
+            }
         }
     </script>
 </body>
