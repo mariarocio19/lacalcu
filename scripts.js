@@ -31,10 +31,8 @@ function appendNumber(number) {
 }
 
 function appendComma() {
-    if (!currentNumber.includes(',')) {
-        currentNumber += ',';
-        updateDisplay();
-    }
+    currentNumber += ',';
+    updateDisplay();
 }
 
 function chooseOperation(op) {
