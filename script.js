@@ -165,3 +165,18 @@ function deleteLastDigit() {
     currentNumber = currentNumber.slice(0, -1);
     updateDisplay();
 }
+
+function changeSign() {
+    if (currentNumber === '') return;
+    currentNumber = (-parseFloat(currentNumber.replace(',', '.'))).toString().replace('.', ',');
+    updateDisplay();
+}
+
+function elevarAlCuadrado() {
+    if (currentNumber === '') return;
+    const number = parseFloat(currentNumber.replace(',', '.'));
+    const result = number * number;
+    currentNumber = result.toString().replace('.', ',');
+    updateDisplay();
+    rellenar_info(result);
+}
