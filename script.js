@@ -33,6 +33,22 @@ function exponentiate(a, b) {
     return a ** b;
 }
 
+// Function to find the square root of a number
+function squareRoot(a) {
+    if (a < 0) {
+        return 'Error: Negative number';
+    }
+    return Math.sqrt(a);
+}
+
+// Function to find the logarithm of a number
+function logarithm(a) {
+    if (a <= 0) {
+        return 'Error: Non-positive number';
+    }
+    return Math.log(a);
+}
+
 // Function to handle the calculation based on user input
 function calculate() {
     const num1 = parseFloat(document.getElementById('num1').value);
@@ -40,7 +56,7 @@ function calculate() {
     const operator = document.getElementById('operator').value;
     let result;
 
-    if (isNaN(num1) || isNaN(num2)) {
+    if (isNaN(num1) || (operator !== 'sqrt' && operator !== 'log' && isNaN(num2))) {
         result = 'Error: Invalid input';
     } else {
         switch (operator) {
@@ -61,6 +77,12 @@ function calculate() {
                 break;
             case '**':
                 result = exponentiate(num1, num2);
+                break;
+            case 'sqrt':
+                result = squareRoot(num1);
+                break;
+            case 'log':
+                result = logarithm(num1);
                 break;
             default:
                 result = 'Invalid operator';

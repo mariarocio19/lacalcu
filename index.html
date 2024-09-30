@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Clásica</title>
+    <title>Calculadora</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -82,6 +82,12 @@
             <button class="button" onclick="calculate()">=</button>
             <button class="button operator" onclick="chooseOperation('+')">+</button>
             <button class="button" onclick="calculateSquare()">x²</button>
+            <button class="button" id="modulo" onclick="mod()">|X|</button>
+            <button class="button" id="factorial" onclick="fact()">X!</button>
+            <button class="button" id="sumatorio" onclick="sumatorio()">Sumatorio</button>
+            <button class="button" id="ordenar" onclick="ordenar()">Ordenar</button>
+            <button class="button" id="revertir" onclick="revertir()">Revertir</button>
+            <button class="button" id="quitar" onclick="quitar()">Quitar</button>
         </div>
     </div>
     <h2 id="info" class="grande" title="Info sobre el número">Info sobre el número</h2>
@@ -154,6 +160,28 @@
             rellenar_info(result);
         }
 
+        function mod() {
+            if (currentNumber === '') return;
+            const number = parseFloat(currentNumber);
+            const result = Math.abs(number);
+            currentNumber = result;
+            updateDisplay();
+            rellenar_info(result);
+        }
+
+        function fact() {
+            if (currentNumber === '') return;
+            let number = parseInt(currentNumber);
+            if (number < 0) return;
+            let result = 1;
+            for (let i = 1; i <= number; i++) {
+                result *= i;
+            }
+            currentNumber = result;
+            updateDisplay();
+            rellenar_info(result);
+        }
+
         function rellenar_info(result) {
             const infoElement = document.getElementById('info');
             if (result < 100) {
@@ -163,6 +191,39 @@
             } else {
                 infoElement.textContent = "Info: El resultado es superior a 200";
             }
+        }
+
+        function sumatorio() {
+            if (currentNumber === '') return;
+            const numbers = currentNumber.split(',').map(Number);
+            const result = numbers.reduce((acc, num) => acc + num, 0);
+            currentNumber = result;
+            updateDisplay();
+            rellenar_info(result);
+        }
+
+        function ordenar() {
+            if (currentNumber === '') return;
+            const numbers = currentNumber.split(',').map(Number);
+            numbers.sort((a, b) => a - b);
+            currentNumber = numbers.join(',');
+            updateDisplay();
+        }
+
+        function revertir() {
+            if (currentNumber === '') return;
+            const numbers = currentNumber.split(',');
+            numbers.reverse();
+            currentNumber = numbers.join(',');
+            updateDisplay();
+        }
+
+        function quitar() {
+            if (currentNumber === '') return;
+            const numbers = currentNumber.split(',');
+            numbers.pop();
+            currentNumber = numbers.join(',');
+            updateDisplay();
         }
     </script>
 </body>

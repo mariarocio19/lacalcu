@@ -14,6 +14,9 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .display {
@@ -24,6 +27,14 @@ body {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
 }
 
 .button {
@@ -35,6 +46,9 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button:hover {
@@ -61,6 +75,7 @@ body {
 .button.equal {
     background-color: #4caf50;
     color: #fff;
+    grid-column: span 2;
 }
 
 .button.equal:hover {
@@ -74,6 +89,7 @@ body {
 .button.clear {
     background-color: #e53935;
     color: #fff;
+    grid-column: span 2;
 }
 
 .button.clear:hover {
@@ -82,4 +98,17 @@ body {
 
 .button.clear:active {
     background-color: #c62828;
+}
+
+.button.number {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+.button.number:hover {
+    background-color: #d5d5d5;
+}
+
+.button.number:active {
+    background-color: #c2c2c2;
 }
